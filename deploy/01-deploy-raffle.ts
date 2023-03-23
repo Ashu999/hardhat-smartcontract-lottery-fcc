@@ -1,24 +1,21 @@
-
-import {DeployFunction} from "hardhat-deploy/types"
-import {HardhatRuntimeEnvironment} from "hardhat/types"
+import { DeployFunction } from "hardhat-deploy/types"
+import { HardhatRuntimeEnvironment } from "hardhat/types"
 
 import {
     networkConfig,
     developmentChains,
     VERIFICATION_BLOCK_CONFIRMATIONS,
-}  from "../helper-hardhat-config"
+} from "../helper-hardhat-config"
 import verify from "../utils/verify"
 
 const FUND_AMOUNT = "1000000000000000000000"
 
-const deployRaffle: DeployFunction = async function (
-    hre: HardhatRuntimeEnvironment
-  ) {
+const deployRaffle: DeployFunction = async function (hre: HardhatRuntimeEnvironment) {
     const { deployments, getNamedAccounts, network, ethers } = hre
     const { deploy, log } = deployments
     const { deployer } = await getNamedAccounts()
-    // const chainId = network.config.chainId
-    const chainId = 31337
+    const chainId = network.config.chainId
+    // const chainId = 31337
     let vrfCoordinatorV2Address: string | undefined, subscriptionId: string | undefined
 
     if (chainId == 31337) {
@@ -63,7 +60,7 @@ const deployRaffle: DeployFunction = async function (
 
     log("Run Price Feed contract with command:")
     const networkName = network.name == "hardhat" ? "localhost" : network.name
-    log(`yarn hardhat run scripts/enterRaffle.js --network ${networkName}`)
+    log(`yarn hardhat run scripts/enterRaffle.ts --network ${networkName}`)
     log("----------------------------------------------------")
 }
 export default deployRaffle
